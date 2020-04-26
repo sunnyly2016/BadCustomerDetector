@@ -13,7 +13,7 @@ And there are 4 examples as well.
 - DetectionExample.ipynb, this is directly detector the bad customers from the given dataset
 - InferenceExample.ipynb, this is use the given dataset as the "training" dataset, and make predictions for new data samples
 - RestfulServiceExample.ipynb, this is a restful service, can be used for **realtime streaming data** and **ready for deployment** . When running this one, first of all need to run the flask "RestfulService.py" to start the service, then the ipynb can access the service by http post
-
+- PypiExample.ipynb, I published the library to Pypi.org which enables the package can be installed directly by using `pip install BadCustomerDetector=0.4`
 
 There is only one class, but with 4 functions.
 
