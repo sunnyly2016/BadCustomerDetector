@@ -1,0 +1,1 @@
+This is a bad customer detector 1st version
