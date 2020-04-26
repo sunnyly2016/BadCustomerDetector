@@ -1,1 +1,1 @@
-From BadCustomerDetector.BadCustomerDetection Import BadCustomerDetection
+from BadCustomerDetector.BadCustomerDetection import BadCustomerDetection

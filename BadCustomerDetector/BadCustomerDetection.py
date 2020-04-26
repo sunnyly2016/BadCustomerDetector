@@ -21,7 +21,7 @@ class BadCustomerDetection():
     ##############################################
     #Calculate within-cluster sum of square (wss)#
     ############################################## 
-    def k_finder(self, cluster_scaled, plot = False,S = 0, curve='convex', direction='decreasing'):
+    def k_finder(self, cluster_scaled, plot = False, S = 0, curve='convex', direction='decreasing'):
         clusters_range = [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]
         sse = self.calculate_WSS(cluster_scaled, clusters_range, plot = plot)
         kneedle = KneeLocator(clusters_range, sse, S, curve, direction)
@@ -83,7 +83,6 @@ class BadCustomerDetection():
                 curr_cluster = pd.concat([curr_cluster, outliers_pred_df], axis=1)
 
             outliers_df = outliers_df.append(curr_cluster)
-
         
         if(method == 'Voting'):
             outliers_df['Voting'] = outliers_df.filter(regex='Decision').sum(axis = 1)
@@ -94,8 +93,15 @@ class BadCustomerDetection():
             outliers_df['bad_customer'] = outliers_df[decision]
 
         return outliers_df
-
-    def bad_customer_detector(self, df, log_transformation = True, elbow_finder = False, n_cluster = 3, outliers_fraction = 0.05, method = 'Voting'): ##if elbow = False, need to provide n_cluster
+     ###############################################
+     #bad customer detector based on the Clustering#
+     ###############################################
+     #plot_wss = True will plot the WSS-K Plot
+     # S, curve and direction are parameters for finding the eblbow(the best K)
+     #The sensitivity parameter S allows us to adjust how aggressive we want Kneedle to be when detecting knees. Smaller values      #for S detect knees quicker, while larger values are more conservative. Put simply, S is a measure of how many “flat”      #points we #expect to see in the unmodified data curve before declaring a knee.
+    
+    def bad_customer_detector(self, df, log_transformation = True, elbow_finder = False, n_cluster = 3, outliers_fraction = 0.05, method = 'Voting', plot_wss = False, S = 0, curve='convex', direction='decreasing'): 
+        ##if elbow = False, need to provide n_cluster
         
         if(log_transformation == True):
             cluster_log = np.log(df.drop(['consumer_id'], axis = 1))
@@ -107,7 +113,7 @@ class BadCustomerDetection():
         ##Start to test cluster numbers
         
         if(elbow_finder == True):
-            K_elbow = self.k_finder(cluster_scaled)
+            K_elbow = self.k_finder(cluster_scaled, plot_wss, S, curve, direction)
             if K_elbow is None:
                 print('Need to provide a number')
             else:
