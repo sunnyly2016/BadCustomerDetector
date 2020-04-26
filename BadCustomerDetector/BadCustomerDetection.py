@@ -65,14 +65,19 @@ class BadCustomerDetection():
             #K Nearest Neighbors
             'KNN': KNN(contamination=outliers_fraction)
        }
-
+        detectors_list = []
         for k in range(cluster_number):
-
             curr_cluster = clustered_data[clustered_data['Cluster'] == k]
             X_train = curr_cluster.drop(['consumer_id','Cluster'], axis = 1)
             for i, (clf_name, clf) in enumerate(classifiers.items()):
                 clf_pred = clf_name+'_Decision'
                 clf.fit(X_train)
+                if(method == 'Voting'):
+                    if(clf_name == 'KNN'):#just save KNN for inference
+                        detectors_list.append(clf)
+                elif(method !='Voting'):
+                    if(clf_name == method):
+                        detectors_list.append(clf)
         # predict raw anomaly score
                 scores_pred = clf.decision_function(X_train)
                 scores_pred_df = pd.DataFrame(list(scores_pred), columns =[clf_name], index = curr_cluster.index.copy())
@@ -92,7 +97,7 @@ class BadCustomerDetection():
             decision = method + '_Decision'
             outliers_df['bad_customer'] = outliers_df[decision]
 
-        return outliers_df
+        return outliers_df, detectors_list
      ###############################################
      #bad customer detector based on the Clustering#
      ###############################################
@@ -121,10 +126,10 @@ class BadCustomerDetection():
         else:
             cluster_number = n_cluster
         #clustering starts from here
-        kmeans_sel = KMeans(n_clusters=cluster_number, random_state=1).fit(cluster_scaled)
+        kmeans_sel = KMeans(n_clusters=cluster_number, random_state=42).fit(cluster_scaled)
         labels = pd.DataFrame(kmeans_sel.labels_)
         clustered_data = df.assign(Cluster=labels)
 
-        outliers = self.outlier_detector(clustered_data, outliers_fraction, method, cluster_number)
+        outliers, detectors_list = self.outlier_detector(clustered_data, outliers_fraction, method, cluster_number)
 
-        return outliers.sort_index()
+        return kmeans_sel, scaler, detectors_list, outliers.sort_index()
