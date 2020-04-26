@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
   name = 'BadCustomerDetector',         
   packages = ['BadCustomerDetector'],   
-  version = '0.2',      
+  version = '0.4',      
   license='MIT', 
   description = 'Test Detector For Auckland Transsport',   # Give a short description about your library
   author = 'Sunny Long',                   # Type in your name
