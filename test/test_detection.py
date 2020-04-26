@@ -34,6 +34,7 @@ def test_answer():
 
     assert len(clustered_data.Cluster.unique()) == 3
 
-    outliers = detector.outlier_detector(clustered_data, outliers_fraction, method, cluster_number)
+    outliers, detectors_list = detector.outlier_detector(clustered_data, outliers_fraction, method, cluster_number)
 
     assert len(outliers.bad_customer.unique()) == 2
+    assert len(detectors_list) == 3
