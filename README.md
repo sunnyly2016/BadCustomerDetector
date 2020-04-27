@@ -1,16 +1,12 @@
 ## Bad Customer Detector
 
-This is an updated version of BadCustomerDetector.
-
 The repo has two key folders and serveral examples: **BadCustomerDetector**, **test** and several examples.
 
-In the folder **BadCustomerDetector**, there is main class.
-
-in the folder **test**, there is an unit test file, written with *pytest*
+In the folder **BadCustomerDetector**, there is main class. And in the folder **test**, there is an unit test file, written with *pytest*
 
 And there are 4 examples as well.
 
-- DetectionExample.ipynb, this is directly detector the bad customers from the given dataset
+- DetectionExample.ipynb, this is the basic detection given the dataset. 
 - InferenceExample.ipynb, this is use the given dataset as the "training" dataset, and make predictions for new data samples
 - RestfulServiceExample.ipynb, this is a restful service, can be used for **realtime streaming data** and **ready for deployment** . When running this one, first of all need to run the flask "RestfulService.py" to start the service, then the ipynb can access the service by http post
 - PypiExample.ipynb, I published the library to Pypi.org which enables the package can be installed directly by using `pip install BadCustomerDetector=0.4`
@@ -26,7 +22,7 @@ Finally, users can choose what models to use to find the outliers(bad custmomers
 
 2. outlier_detector()
 
-This is the actual outlier detection function , it takes the results of the clustering.
+This is the actual outlier detection function , it takes the results of the clustering as the input.
 
 3. calculate_WSS()
 
@@ -34,6 +30,6 @@ This is to calculate the within-cluster sum of square (wss) which will later be 
  
 4. k_finder()
 
-Utilized a package called KneeLocation to find the elbow of the WSS plot.
+Utilized a package called KneeLocation to find the elbow from the WSS plot and the elbow is the best K.
 
 

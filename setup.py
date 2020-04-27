@@ -8,7 +8,7 @@ setup(
   author = 'Sunny Long',                   # Type in your name
   author_email = 'sunnyly2016@gmail.com',      # Type in your E-Mail
   url = 'https://github.com/sunnyly2016/BadCustomerDetector',   # Provide either the link to your github or to your website
-  download_url = '',    # I explain this later on
+  download_url = 'https://github.com/sunnyly2016/BadCustomerDetector/archive/v0.4-alpha.tar.gz',    # I explain this later on
   keywords = ['AT', 'Data Science', 'Fraud'],   # Keywords that define your package best
   install_requires=[            # I get to this in a second
           'pandas',
